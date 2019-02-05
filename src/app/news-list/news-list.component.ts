@@ -1,15 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-interface IArticle {
-  id: string;
-  author: string;
-  title: string;
-  description: string;
-  url: string;
-  urlToImage: string;
-  publishedAt: string;
-  content: string;
-}
+import { Article } from '../article';
+import { ApiArticles, LocalArticles, Sources } from '../mock-news';
 
 @Component({
   selector: 'app-news-list',
@@ -19,33 +11,16 @@ interface IArticle {
 
 export class NewsListComponent implements OnInit {
 
-  sampleSources: string[] = ['Source One', 'Source Two', 'Source with large text', 'Local Source'];
-
-  sources: string[] = this.sampleSources;
+  // Mock of logic for retrieving sources from the API.
+  sources: string[] = Sources;
   source = 'Select source!';
+  localSource = 'Local Source';
   isSource = false;
 
-  apiArticles: IArticle[] = Array(10).fill(
-    {
-      author: 'Test Api Author',
-      title: 'Test Api Title',
-      description: 'Test Api Description. Test Api Description. Test Api Description.',
-      url: 'https://www.ccn.com/bitcoin-price-trades-sideways-as-crypto-market-pines-for-more-volatility',
-      urlToImage: 'https://cdn.ccn.com/wp-content/uploads/2018/08/bitcoin-price-stuck-gum.jpg',
-      publishedAt: '2019-02-04T23:30:15Z',
-      content: 'Test Api Content. Test Api Content. Test Api Content. Test Api Content. Test Api Content. Test  Api Content.'
-    });
-  localArticles: IArticle[] = Array(10).fill(
-    {
-      id: 'Test Id',
-      author: 'Test Local Author',
-      title: 'Test Local Title',
-      description: 'Test Local Description. Test Local Description. Test Local Description.',
-      content: 'Test Local Content. Test Local Content. Test Local Content. Test Local Content. Test Local Content. Test Local Content.'
-    });
-
-  articles: IArticle[];
+  articles: Article[];
   isArticles = false;
+
+  filter: string;
 
   isLocal = false;
 
@@ -53,27 +28,31 @@ export class NewsListComponent implements OnInit {
     this.isSource = true;
     this.source = source;
 
-    if (source === 'Local Source') {
-      this.articles = this.localArticles;
+    if (source === this.localSource) {
+      // Mock of logic for retrieving local articles.
+      this.articles = LocalArticles;
     } else {
-      this.articles = this.apiArticles;
+      // Mock of logic for retrieving articles related to the source from the API.
+      this.articles = ApiArticles;
     }
     this.isArticles = true;
   }
 
+  ApplyFilter() {
+    // Mock of logic for retrieving articles according to the filter.
+    console.log(`ApplyFilter! Filter - '${this.filter}'.`);
+  }
+
   ChangeMode() {
-    this.isLocal = !this.isLocal;
     if (this.isLocal) {
-      this.sources = ['Local Source'];
-      this.source = 'Local Source';
+      this.source = this.localSource;
       this.ChangeSource(this.source);
-    } else {
-      this.sources = this.sampleSources;
     }
   }
 
-  hadleExpanding(event: boolean, article: IArticle) {
-    console.log('Article has been expanded!');
+  LoadMore() {
+    // Mock of logic for retrieving additional articles.
+    console.log('LoadMore!');
   }
 
   constructor() { }

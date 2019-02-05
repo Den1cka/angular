@@ -2,11 +2,9 @@
   <img class="card-img-top" *ngIf="article.urlToImage" src="{{article.urlToImage}}">
   <div class="card-body text-center">
     <h5 class="card-title">{{article.title}}</h5>
-    <p class="card-text">{{article.description}}</p>
-    <a class="card-link" [routerLink]="['/article/details',source,article.id?article.id:article.publishedAt]">See
-      more...</a>
+    <p class="card-text">{{article.content}}</p>
     <a class="card-link" *ngIf="article.id" href="article/edit/{{article.id}}">Edit!</a>
     <a class="card-link" *ngIf="article.id" href="#">Delete!</a>
   </div>
-  <div class="card-footer text-muted text-center">{{article.publishedAt}}</div>
+  <div class="card-footer text-muted text-center">{{article.author}}, {{article.publishedAt}}</div>
 </div>

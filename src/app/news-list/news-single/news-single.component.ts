@@ -1,15 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
-interface IArticle {
-  id: string;
-  author: string;
-  title: string;
-  description: string;
-  url: string;
-  urlToImage: string;
-  publishedAt: string;
-  content: string;
-}
+import { Article } from '../../article';
 
 @Component({
   selector: 'app-news-single',
@@ -18,15 +9,8 @@ interface IArticle {
 })
 export class NewsSingleComponent implements OnInit {
 
-  @Input() article: IArticle;
-  @Output() expanding: EventEmitter<boolean> = new EventEmitter();
-
-  isExpanded = false;
-
-  expand() {
-    this.isExpanded = true;
-    this.expanding.emit(true);
-  }
+  @Input() article: Article;
+  @Input() source: string;
 
   constructor() {
   }

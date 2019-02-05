@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
+import { Article } from '../article';
+import { LocalArticle } from '../mock-news';
+
 @Component({
   selector: 'app-news-edit',
   templateUrl: './news-edit.component.html',
@@ -9,50 +12,25 @@ import { ActivatedRoute } from '@angular/router';
 export class NewsEditComponent implements OnInit {
 
   id: string;
-  action: string;
+  type: string;
 
-  header: string;
-
-  button: string;
-  isButton: boolean;
-
-  isDisabled: boolean;
+  article: Article = new Article();
 
   constructor(private route: ActivatedRoute) {
     this.id = this.route.snapshot.params.id;
-    this.action = this.route.snapshot.params.action;
   }
 
   ngOnInit() {
-    switch (this.action) {
-      case 'new':
-        this.header = 'New Article';
-        this.button = 'Create';
-        this.isButton = true;
-        this.isDisabled = false;
-        break;
-      case 'edit':
-        this.header = `Edit Article. Id - ${this.id}.`;
-        this.button = 'Update';
-        this.isButton = true;
-        this.isDisabled = false;
-        break;
-      case 'delete':
-        this.header = `Delete Article. Id - ${this.id}.`;
-        this.button = 'Delete';
-        this.isButton = true;
-        this.isDisabled = true;
-        break;
-      case 'details':
-        this.header = `Article details. Id - ${this.id}.`;
-        this.button = '';
-        this.isButton = false;
-        this.isDisabled = true;
-        break;
+    if (!this.id) {
+      this.type = 'Create!';
+    } else {
+      this.type = 'Update!';
+      // Mock of logic for retrieving specific article from the local storage.
+      this.article = LocalArticle;
     }
   }
 
-  handleChanges() {
+  HandleChanges() {
     console.log('Handle changes for the article.');
   }
 
