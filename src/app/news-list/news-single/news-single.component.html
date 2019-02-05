@@ -1,0 +1,12 @@
+<div class="card">
+  <img class="card-img-top" *ngIf="article.urlToImage" src="{{article.urlToImage}}">
+  <div class="card-body text-center">
+    <h5 class="card-title">{{article.title}}</h5>
+    <p class="card-text" *ngIf="!isExpanded">{{article.description}}</p>
+    <p class="card-text" *ngIf="isExpanded">{{article.content}}</p>
+    <a class="card-link" href="#" *ngIf="!isExpanded" (click)="expand()">See more...</a>
+    <a class="card-link" *ngIf="article.id" href="article/edit/{{article.id}}">Edit!</a>
+    <a class="card-link" *ngIf="article.id" href="article/delete/{{article.id}}">Delete!</a>
+  </div>
+  <div class="card-footer text-muted text-center" *ngIf="article.publishedAt">{{article.publishedAt}}</div>
+</div>
