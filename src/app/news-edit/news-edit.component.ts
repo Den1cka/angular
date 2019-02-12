@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { Article } from '../article';
-import { LocalArticle } from '../mock-news';
+
+import { NewsDatabaseService } from '../news-database.service';
 
 @Component({
   selector: 'app-news-edit',
@@ -16,7 +17,7 @@ export class NewsEditComponent implements OnInit {
 
   article: Article = new Article();
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private newsDatabaseService: NewsDatabaseService) {
     this.id = this.route.snapshot.params.id;
   }
 
@@ -25,13 +26,21 @@ export class NewsEditComponent implements OnInit {
       this.type = 'Create!';
     } else {
       this.type = 'Update!';
-      // Mock of logic for retrieving specific article from the local storage.
-      this.article = LocalArticle;
+      this.getLocalArticle(this.id);
     }
   }
 
   HandleChanges() {
-    console.log('Handle changes for the article.');
+    if (!this.id) {
+      this.newsDatabaseService.createArticle(this.article);
+    } else {
+      this.newsDatabaseService.updateArticle(this.id, this.article);
+    }
+  }
+
+  getLocalArticle(id) {
+    this.newsDatabaseService.getArticle(id)
+      .subscribe(article => this.article = article);
   }
 
 }

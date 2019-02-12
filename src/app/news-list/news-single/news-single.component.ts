@@ -10,7 +10,7 @@ import { Article } from '../../article';
 export class NewsSingleComponent implements OnInit {
 
   @Input() article: Article;
-  @Input() source: string;
+  @Input() source: { id: string, name: string };
 
   constructor() {
   }

@@ -3,10 +3,10 @@
   <div class="card-body text-center">
     <h5 class="card-title">{{article.title}}</h5>
     <p class="card-text">{{article.description}}</p>
-    <a class="card-link" [routerLink]="['/article/details',source,article.id?article.id:article.publishedAt]">See
+    <a class="card-link" [routerLink]="['/article/details',source.id,article._id?article._id:article.publishedAt]">See
       more...</a>
-    <a class="card-link" *ngIf="article.id" href="article/edit/{{article.id}}">Edit!</a>
-    <a class="card-link" *ngIf="article.id" href="#">Delete!</a>
+    <a class="card-link" *ngIf="article._id" href="article/edit/{{article._id}}">Edit!</a>
+    <a class="card-link" *ngIf="article._id" href="#">Delete!</a>
   </div>
-  <div class="card-footer text-muted text-center">{{article.publishedAt}}</div>
+  <div class="card-footer text-muted text-center">{{article.publishedAt | date}}</div>
 </div>
