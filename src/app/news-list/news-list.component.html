@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="btn-toolbar mb-3 justify-content-center">
+    <div class="input-group mr-2 mb-2">
+      <div class="dropdown" dropdown>
+        <button id="sourceDropdown" class="btn btn-secondary dropdown-toggle" dropdownToggle [attr.disabled]="isLocal ? '' : null">
+          {{source}}
+        </button>
+        <div class="dropdown-menu" *dropdownMenu>
+          <button class="dropdown-item" *ngFor="let source of sources" (click)="ChangeSource(source)">{{source}}</button>
+          <div class="dropdown-divider"></div>
+          <button class="dropdown-item" (click)="ChangeSource(localSource)">{{localSource}}</button>
+        </div>
+      </div>
+    </div>
+    <div class="input-group mr-2 mb-2">
+      <input class="form-control" type="text" placeholder="Type your text!" [(ngModel)]="filter">
+      <div class="input-group-append">
+        <button type="button" class="btn btn-secondary" (click)="ApplyFilter()">Filter</button>
+      </div>
+    </div>
+    <div class="input-group mr-2 mb-2">
+      <div class="input-group-prepend">
+        <div class="input-group-text">
+          <input type="checkbox" [(ngModel)]="isLocal" (change)="ChangeMode()">
+        </div>
+      </div>
+      <input class="form-control" type="text" placeholder="Only created by me!" readonly>
+    </div>
+    <div class="input-group mr-2 mb-2">
+      <a class="btn btn-secondary" href="article/create">Add Article</a>
+    </div>
+  </div>
+  <div class="alert alert-dark text-center" *ngIf="isSource">
+    Source: {{source}}!
+  </div>
+  <div class="card-columns" *ngIf="isArticles">
+    <app-news-single [article]="article" [source]="source" *ngFor="let article of articles"></app-news-single>
+  </div>
+  <button type="button" class="btn btn-secondary w-100" *ngIf="isArticles" (click)="LoadMore()">Load more...</button>
+</div>

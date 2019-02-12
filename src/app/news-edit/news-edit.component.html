@@ -1,0 +1,42 @@
+<div class="alert alert-dark text-center">
+  {{type}}
+</div>
+<form #articleForm="ngForm">
+  <div class="row">
+    <div class="col">
+      <div class="form-group">
+        <label>Title</label>
+        <input class="form-control" type="text" placeholder="Title of the article" [(ngModel)]="article.title" name="title"
+          required #title="ngModel">
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <input class="form-control" type="text" placeholder="Description of the article" [(ngModel)]="article.description"
+          name="description" required #title="ngModel">
+      </div>
+      <div class="form-group">
+        <label>Content</label>
+        <textarea class="form-control" rows="4" placeholder="Content of the article" [(ngModel)]="article.content" name="content"></textarea>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-group">
+        <label>Date</label>
+        <input class="form-control" type="datetime-local" placeholder="Date of the article" [(ngModel)]="article.publishedAt"
+          name="publishedAt">
+      </div>
+      <div class="form-group">
+        <label>Author</label>
+        <input class="form-control" type="text" placeholder="Author of the article" [(ngModel)]="article.author" name="author">
+      </div>
+      <div class="form-group">
+        <label>Source URL</label>
+        <input class="form-control" type="url" placeholder="URL of the article" [(ngModel)]="article.url" name="url"
+          pattern="https?://.+" required #url="ngModel">
+      </div>
+    </div>
+  </div>
+  <div class="form-group text-center">
+    <button type="submit" class="btn btn-secondary" (click)="HandleChanges()" [disabled]="!articleForm.form.valid">{{type}}</button>
+  </div>
+</form>
