@@ -30,6 +30,6 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to news-aggregator-demo!');
+    expect(compiled.querySelector('h3').textContent).toContain('News API - Demo');
   });
 });

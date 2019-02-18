@@ -12,9 +12,6 @@ export class NewsSingleComponent implements OnInit {
   @Input() article: Article;
   @Input() source: { id: string, name: string };
 
-  constructor() {
-  }
-
   ngOnInit() {
   }
 
