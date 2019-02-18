@@ -3,19 +3,19 @@
     <div class="input-group mr-2 mb-2">
       <div class="dropdown" dropdown>
         <button id="sourceDropdown" class="btn btn-secondary dropdown-toggle" dropdownToggle [attr.disabled]="isLocal ? '' : null">
-          {{source}}
+          {{source.name}}
         </button>
         <div class="dropdown-menu" *dropdownMenu>
-          <button class="dropdown-item" *ngFor="let source of sources" (click)="ChangeSource(source)">{{source}}</button>
+          <button class="dropdown-item" *ngFor="let source of sources" (click)="ChangeSource(source)">{{source.name}}</button>
           <div class="dropdown-divider"></div>
-          <button class="dropdown-item" (click)="ChangeSource(localSource)">{{localSource}}</button>
+          <button class="dropdown-item" (click)="ChangeSource(localSource)">{{localSource.name}}</button>
         </div>
       </div>
     </div>
     <div class="input-group mr-2 mb-2">
-      <input class="form-control" type="text" placeholder="Type your text!" [(ngModel)]="filter">
+      <input class="form-control" type="text" placeholder="Type your text!" [(ngModel)]="filter" [attr.disabled]="source === localSource ? '' : null">
       <div class="input-group-append">
-        <button type="button" class="btn btn-secondary" (click)="ApplyFilter()">Filter</button>
+        <button type="button" class="btn btn-secondary" (click)="ApplyFilter()" [attr.disabled]="source === localSource ? '' : null">Filter</button>
       </div>
     </div>
     <div class="input-group mr-2 mb-2">
@@ -31,10 +31,11 @@
     </div>
   </div>
   <div class="alert alert-dark text-center" *ngIf="isSource">
-    Source: {{source}}!
+    Source: {{source.name}}!
   </div>
   <div class="card-columns" *ngIf="isArticles">
     <app-news-single [article]="article" [source]="source" *ngFor="let article of articles"></app-news-single>
   </div>
-  <button type="button" class="btn btn-secondary w-100" *ngIf="isArticles" (click)="LoadMore()">Load more...</button>
+  <button type="button" class="btn btn-secondary w-100" *ngIf="isArticles && source !== localSource" (click)="LoadMore()">Load
+    more...</button>
 </div>

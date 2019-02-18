@@ -1,5 +1,6 @@
 export class Article {
-  id: string;
+  // tslint:disable-next-line:variable-name
+  _id: string;
   author: string;
   title: string;
   description: string;

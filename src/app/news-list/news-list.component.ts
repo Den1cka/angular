@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Article } from '../article';
-import { ApiArticles, LocalArticles, Sources } from '../mock-news';
+
+import { NewsApiService } from '../news-api.service';
+import { NewsDatabaseService } from '../news-database.service';
 
 @Component({
   selector: 'app-news-list',
@@ -11,36 +13,36 @@ import { ApiArticles, LocalArticles, Sources } from '../mock-news';
 
 export class NewsListComponent implements OnInit {
 
-  // Mock of logic for retrieving sources from the API.
-  sources: string[] = Sources;
-  source = 'Select source!';
-  localSource = 'Local Source';
+  sources: { id: string, name: string }[];
+  source = { id: 'select', name: 'Select source!' };
+  localSource = { id: 'local', name: 'Local Source' };
   isSource = false;
 
   articles: Article[];
   isArticles = false;
 
-  filter: string;
+  filter = '';
 
   isLocal = false;
 
-  ChangeSource(source: string) {
+  page = 1;
+
+  ChangeSource(source: { id: string, name: string }) {
     this.isSource = true;
     this.source = source;
 
-    if (source === this.localSource) {
-      // Mock of logic for retrieving local articles.
-      this.articles = LocalArticles;
+    if (this.source === this.localSource) {
+      this.getLocalArticles();
     } else {
-      // Mock of logic for retrieving articles related to the source from the API.
-      this.articles = ApiArticles;
+      this.articles = [];
+      this.getApiArticles(this.source.id, this.page = 1, this.filter);
     }
     this.isArticles = true;
   }
 
   ApplyFilter() {
-    // Mock of logic for retrieving articles according to the filter.
-    console.log(`ApplyFilter! Filter - '${this.filter}'.`);
+    this.articles = [];
+    this.getApiArticles(this.source.id, this.page = 1, this.filter);
   }
 
   ChangeMode() {
@@ -51,13 +53,28 @@ export class NewsListComponent implements OnInit {
   }
 
   LoadMore() {
-    // Mock of logic for retrieving additional articles.
-    console.log('LoadMore!');
+    this.getApiArticles(this.source.id, this.page = this.page + 1, this.filter);
   }
 
-  constructor() { }
+  constructor(private newsApiService: NewsApiService, private newsDatabaseService: NewsDatabaseService) { }
+
+  getSources() {
+    this.newsApiService.getSources()
+      .subscribe(sources => this.sources = sources);
+  }
+
+  getApiArticles(sourceId, page, filter) {
+    this.newsApiService.getArticles(sourceId, page, filter)
+      .subscribe(articles => this.articles = this.articles.concat(articles));
+  }
+
+  getLocalArticles() {
+    this.newsDatabaseService.getArticles()
+      .subscribe(articles => this.articles = articles);
+  }
 
   ngOnInit() {
+    this.getSources();
   }
 
 }
